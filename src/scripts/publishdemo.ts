@@ -9,7 +9,7 @@ ghpages.publish(__dirname + '/../../demo', {
 
   /** Branch */
   branch: 'master',
-  repo: 'https://' + process.env.GH_TOKEN + '@github.com/basarat/yester-demo.git',
+  repo: 'https://' + process.env.GH_TOKEN + '@github.com/basarat/takeme-demo.git',
 
   /** User */
   user: {
