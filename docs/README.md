@@ -1,12 +1,12 @@
 > Client side routing so simple that you will fall in love ❤️
 
-<iframe src="https://ghbtns.com/github-btn.html?user=basarat&repo=takme&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+<iframe src="https://ghbtns.com/github-btn.html?user=basarat&repo=takeme&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
 
-> [Powered by your github ⭐s](https://github.com/basarat/takme/stargazers).
+> [Powered by your github ⭐s](https://github.com/basarat/takeme/stargazers).
 
 Uni directional data flow is the best data flow: 
 
-![URL -> Application State -> Your View](https://raw.githubusercontent.com/basarat/takme/master/docs/uni-directional.png)
+![URL -> Application State -> Your View](https://raw.githubusercontent.com/basarat/takeme/master/docs/uni-directional.png)
 
 Saw the other solutions out there, I had two difference of opinions:
 
@@ -19,7 +19,7 @@ If existing solutions work well for you (`npm install foo foo-bar @types/foo @ty
 
 ## Demo
 
-[Demo for all of the concepts in practice](http://basarat.com/takme-demo)
+[Demo for all of the concepts in practice](http://basarat.com/takeme-demo)
 
 
 ## What does it support
@@ -29,13 +29,13 @@ Simple `#/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management. Th
 ## Install 
 
 ```
-npm install takme --save
+npm install takeme --save
 ```
 
 ## Quick 
 
 ```js
-import {Router, navigate, link} from 'takme';
+import {Router, navigate, link} from 'takeme';
 
 /**
  * The router takes an array of RouteConfig objects.
