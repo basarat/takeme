@@ -1,6 +1,6 @@
 self.$config = {
-  repo: 'basarat/yester',
+  repo: 'basarat/takeme',
   twitter: 'basarat',
-  url: 'http://basarat.com/yester',
-  'edit-link': 'https://github.com/basarat/yester/blob/master/docs',
+  url: 'http://basarat.com/takeme',
+  'edit-link': 'https://github.com/basarat/takeme/blob/master/docs',
 }

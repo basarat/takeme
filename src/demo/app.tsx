@@ -38,9 +38,9 @@ export const Nav = observer(() => {
     {routeState.loggedIn && <Button onClick={() => routeState.logout()}>Logout</Button>}
 
     <Horizontal>
-      <a href={'https://github.com/basarat/yester/tree/master/src/demo'} target="_blank">Code for the demo</a>
-      <a href={'http://basarat.com/yester'} target="_blank">Yester Docs</a>
-      <a href={'https://github.com/basarat/yester'} target="_blank">Star it on github ⭐</a>
+      <a href={'https://github.com/basarat/takeme/tree/master/src/demo'} target="_blank">Code for the demo</a>
+      <a href={'http://basarat.com/takeme'} target="_blank">takeme Docs</a>
+      <a href={'https://github.com/basarat/takeme'} target="_blank">Star it on github ⭐</a>
     </Horizontal>
   </Vertical>;
 });
