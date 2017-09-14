@@ -191,14 +191,16 @@ This file is my single source of truth.
 * I configure my routing using these functions: 
 
 ```
-const router = new Router({
-  [links.login()]: {
+const router = new Router([
+  {
+    $: links.login(),
     enter:()=>{ /* do your state thing */ }
   },
-  [links.profile(':profileId')]: {
+  {
+    $: links.profile(':profileId'),
     enter:({params})=>{ /* do your state thing with `params.profileId` */ }
   },
-});
+]);
 ```
 
 * All calls to `navigate` also use `links` e.g. `navigate(links.profile('dave'))`. 
