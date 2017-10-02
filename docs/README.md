@@ -24,7 +24,11 @@ If existing solutions work well for you (`npm install foo foo-bar @types/foo @ty
 
 ## What does it support
 
-Simple `#/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management. That's all I really needed. You can map `url` => `state` => `any arbitrary nesting of components` very easily and more maintainably in the long term instead of depending on hidden features of some library.
+Simple `#/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management. That's all I really needed. 
+
+> Why not any nesting routes? 
+
+You can map `url` => `state` => `any arbitrary nesting of components` very easily and more maintainably in the long term instead of depending on hidden features of some library.
 
 ## Install 
 
