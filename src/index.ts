@@ -196,5 +196,11 @@ export function navigate(path: string, replace?: boolean) {
  * Gives you a link that when triggered, navigates to the given path
  */
 export function link(path: string) {
-  return `#${path}`;
+  /** 
+   * Needs `./` to prevent accessibility error `link refers to non existing element`
+   * 
+   * e.g. 
+   * path `/foo` => `./#/foo`
+   **/
+  return `./#${path}`;
 }
