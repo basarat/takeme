@@ -11,7 +11,7 @@ Uni directional data flow is the best data flow:
 Saw the other solutions out there, I had two difference of opinions:
 
 * This is built in TypeScript, for TypeScript. Other libraries [will get there eventually](https://basarat.gitbooks.io/typescript/content/docs/why-typescript.html). Till then fighting with out-of-date type definitions was not fun.
-* They encourage tangling routing with components. This can be a good idea, but any time I needed more power, I had to do things like wrap my component (which may or may not work with TS classes), imagine props getting passed magically (not very type safe) and jump other hoops like `next` and `done` callbacks.
+* They encourage tangling routing with components. This can be a good idea, but any time I needed more power, I had to do things like wrap my component (which may or may not work with TS classes), imagine props getting passed magically (not very type safe) and jump other hoops like `next` and `done` callbacks (we just use promises).
 
 If existing solutions work well for you (`npm install foo foo-bar @types/foo @types/foo-bar`) *thats okay*. You can move on and live a happy life yet 🌹
 
