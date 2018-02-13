@@ -5,7 +5,9 @@
 A simple client side routing solution with the simple uni-directional data flow: 
 
 ```
-url -> ApplicationState -> YourView
+url ------> ApplicationState ------> YourView   
+  ↖                                     ↙
+     navigate | link | browser history
 ```
 
 > [Powered by your github ⭐s](https://github.com/basarat/takeme/stargazers)
