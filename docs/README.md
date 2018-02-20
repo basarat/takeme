@@ -163,6 +163,10 @@ The router takes an array of `RouteConfig` objects. On a route change (browser h
 ```js
 router.enableHtml5Routing().init();
 ```
+You can even specify a base URL e.g. 
+```js
+router.enableHtml5Routing('/awesome').init();
+```
 
 * You will need to create a `Link` component that makes browser click / navigate events to `history.pushState`. This is easy to do with the utility `html5LinkOnClick` e.g. for React:
 
