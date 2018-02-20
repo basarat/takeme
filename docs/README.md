@@ -24,7 +24,8 @@ If existing solutions work well for you (`npm install foo foo-bar @types/foo @ty
 
 ## What does it support
 
-Simple `#/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management. That's all I really needed. 
+* Non Html5 mode: Simple `#/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management
+* Html5 mode: Simple `/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management
 
 > Why not any nesting routes? 
 
@@ -153,6 +154,25 @@ The router takes an array of `RouteConfig` objects. On a route change (browser h
   { $: '*', 
     enter: ()=>{ appState.current = 'notfound' } },
 ]
+```
+
+## Html5 Routing 
+> Of course this assumes your server will return the same (index.html / application) file for any routes that you might be handling client side. 
+
+* You can use takeme with html5 with a simple function call to `enableHtml5Routing`: 
+```js
+router.enableHtml5Routing().init();
+```
+
+* You will need to create a `Link` component that makes browser click / navigate events to `history.pushState`. This is easy to do with the utility provided e.g. for React:
+
+```js
+const Link: React.SFC<{ href: string, target?: string }> = (props) =>
+  <a onClick={(e) => html5LinkOnClick({ event: e.nativeEvent })}
+    href={props.href}
+    target={props.target}
+    children={props.children}
+  />
 ```
 
 ## Tips
