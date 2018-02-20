@@ -1,5 +1,5 @@
 /** Normalize JS */
-import 'babel-polyfill';
+import "core-js";
 /** Normaize CSS */
 import { normalize } from "csstips";
 normalize();
