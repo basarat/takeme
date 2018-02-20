@@ -276,7 +276,7 @@ export const Profile = observer(({ profileId }: { profileId: string }) =>
 );
 
 /**
- * Route -> Page
+ * Application State -> Page
  */
 const Page = observer(() => {
   switch (routeState.route) {
