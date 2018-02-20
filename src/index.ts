@@ -28,8 +28,7 @@ namespace dom {
       return hash;
     }
     else {
-      /** -1 to preserve tailing `/` */
-      return window.location.pathname.substr(html5Base.length - 1);
+      return window.location.pathname.substr(html5Base.length);
     }
   }
 
@@ -141,7 +140,7 @@ export class Router {
    * - Server must support returning the same page on route triggers.
    * - Your browser targets support pushState: https://caniuse.com/#search=pushstate
    */
-  enableHtml5Routing(html5Base: string = '/') {
+  enableHtml5Routing(html5Base: string = '') {
     dom.html5Base = html5Base;
     return this;
   }
@@ -214,7 +213,7 @@ export class Router {
  */
 export function navigate(path: string, replace?: boolean) {
   dom.html5ModeEnabled()
-    ? dom.setLocation(`${dom.html5Base!.substr(1)}${path}`, !!replace)
+    ? dom.setLocation(`${dom.html5Base}${path}`, !!replace)
     : dom.setLocation(`#${path}`, !!replace);
 }
 
@@ -223,7 +222,7 @@ export function navigate(path: string, replace?: boolean) {
  */
 export function link(path: string) {
   return dom.html5ModeEnabled()
-    ? `${dom.html5Base!.substr(1)}${path}`
+    ? `${dom.html5Base!}${path}`
     /** 
      * Needs `./` to prevent accessibility error `link refers to non existing element`
      * 
@@ -258,6 +257,6 @@ export const html5LinkOnClick = ({
     event.preventDefault();
 
     const location = linkElement.href;
-    navigate(location);
+    dom.setLocation(location, !!replace);
   }
 }

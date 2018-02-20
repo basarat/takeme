@@ -94,5 +94,5 @@ const Page = observer(() => {
  * Kickoff
  */
 ReactDOM.render(<Page />, document.getElementById('root'))
-router.enableHtml5Routing().init();
+router.enableHtml5Routing('/awesome').init();
 forceRenderStyles();
