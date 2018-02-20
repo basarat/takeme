@@ -301,9 +301,8 @@ The return path (dispatch path) is handled by the router (can be user clicking a
 
 ```
 url 
--handlers cause change in -> 
-  state 
-    -mobx causes re-rendering of-> view
+  --- handlers cause change in ---> state 
+    --- mobx causes re-rendering of ---> view
 ```
 
 ## Tips
