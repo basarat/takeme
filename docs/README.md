@@ -293,11 +293,11 @@ const Page = observer(() => {
 });
 ```
 
-Now we have the complete working path: 
+Now we have the complete working flow of logic: 
 
 ![URL -> Application State -> View](https://raw.githubusercontent.com/basarat/takeme/master/docs/02-url-state-view.png). 
 
-The return path (dispatch path) is handled by the router (can be user clicking a `link`, or browser history navigation, or you can call `navigate` yourself), it will trigger any handlers registered giving a very deterministic and maintainable application logic:
+The return flow (dispatch flow) is handled by the router (can be user clicking a `link`, or browser history navigation, or you can call `navigate` yourself), it will trigger any handlers registered giving a very deterministic and maintainable application logic:
 
 ```
 url 
