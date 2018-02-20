@@ -2,6 +2,8 @@
 
 > Take me back to when. Things were simpler then 🌹
 
+[![Build Status][travis-image]][travis-url]
+
 A simple client side routing solution with the simple uni-directional data flow: 
 
 ```
@@ -21,3 +23,7 @@ Build with TypeScript, for TypeScript 🌹
 ## Demo
 
 [A demo of the concepts explained in the docs](http://basarat.com/takeme-demo/)
+
+
+[travis-image]:https://travis-ci.org/basarat/takeme.svg?branch=master
+[travis-url]:https://travis-ci.org/basarat/takeme
