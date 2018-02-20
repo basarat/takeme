@@ -21,7 +21,7 @@ namespace dom {
       return hash;
     }
     else {
-      return window.location.href.substr(html5Base.length);
+      return window.location.pathname.substr(html5Base.length);
     }
   }
 
