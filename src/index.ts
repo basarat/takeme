@@ -4,19 +4,25 @@ export { match, MatchResult, MatchResultParams };
 
 namespace dom {
   const dloc = typeof document !== 'undefined' ? document.location : { hash: '' };
+  export let html5Base: null | string = null;
 
   export function readHash(): string {
-    // When the address bar shows '#'
-    // - Non-IE browsers return ''
-    // - IE returns '#'
-    // Normalize to ''
-    const hash = dloc.hash === '#' ? '' : dloc.hash;
+    if (html5Base == null) {
+      // When the address bar shows '#'
+      // - Non-IE browsers return ''
+      // - IE returns '#'
+      // Normalize to ''
+      const hash = dloc.hash === '#' ? '' : dloc.hash;
 
-    // For empty path we should return `#/`
-    // This keeps the matching algorithm consistent and simple
-    if (hash === '') return '#/';
+      // For empty path we should return `#/`
+      // This keeps the matching algorithm consistent and simple
+      if (hash === '') return '#/';
 
-    return hash;
+      return hash;
+    }
+    else {
+      return window.location.href.substr(html5Base.length);
+    }
   }
 
   /**
@@ -119,6 +125,17 @@ export class Router {
    */
   init() {
     return this.trigger({ oldHash: '', newHash: dom.readHash() });
+  }
+
+  /**
+   * Enables pure html5 routing.
+   * NOTE: 
+   * - Server must support returning the same page on route triggers.
+   * - Your browser targets support pushState: https://caniuse.com/#search=pushstate
+   */
+  enableServerRouting(html5Base: string = '') {
+    dom.html5Base = html5Base;
+    return this;
   }
 
   private trigger = async ({ oldHash, newHash }: { oldHash: string, newHash: string }) => {
