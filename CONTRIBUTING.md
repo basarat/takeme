@@ -7,3 +7,7 @@ npm install
 * Test with `npm t`
 * To run client side routing demo locally run `npm run demo:client`
 * To run server side routing demo locally run `npm run demo:server`
+
+# Publishing 
+* `npm version major|minor|patch`
+* Before publishing make sure you check that the client side AND the server side demos work locally.
