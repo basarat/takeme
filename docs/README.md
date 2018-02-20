@@ -252,7 +252,11 @@ export const router = new Router([
   { $: '*', enter: () => routeState.setRoute('login') },
 ]).init();
 ```
-Great now we have a nice flow from `url -> appliaction state`. Next up is the `state -> view`. As `state` is `mobx observable`, it's easy to do with a `mobx observer` e.g. for React: 
+Great now we have a nice flow from `url -> appliaction state`. Next up is the `state -> view`. 
+
+![Application State -> View](https://raw.githubusercontent.com/basarat/takeme/master/docs/01-state-view.png). 
+
+As `state` is `mobx observable`, it's easy to do with a `mobx observer` e.g. for React: 
 
 ```js
 /**
@@ -291,7 +295,7 @@ const Page = observer(() => {
 
 Now we have the complete working path: 
 
-![URL -> Application State -> View](https://raw.githubusercontent.com/basarat/takeme/master/docs/00-url-state.png). 
+![URL -> Application State -> View](https://raw.githubusercontent.com/basarat/takeme/master/docs/02-url-state-view.png). 
 
 The return path (dispatch path) is handled by the router (can be user clicking a `link`, or browser history navigation, or you can call `navigate` yourself), it will trigger any handlers registered giving a very deterministic and maintainable application logic:
 
