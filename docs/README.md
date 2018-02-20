@@ -180,6 +180,128 @@ const Link: React.SFC<{ href: string, target?: string }> = (props) =>
   />
 ```
 
+## Complete Example Walkthrough
+Here is the idea again. 
+![URL -> Application State -> Your View](https://raw.githubusercontent.com/basarat/takeme/master/docs/uni-directional.png)
+
+Lets break down this image into its portions. First the URL to Application State flow. 
+
+![URL -> Application State](https://raw.githubusercontent.com/basarat/takeme/master/docs/00-url-state.png)
+
+We define our links and application state and the transform from (`url -> state`) as a config to the router:
+
+```js
+import { navigate, Router } from 'takeme';
+
+// URLs
+export const links = {
+  login: () => '/login',
+  profile: (id: string) => `/profile/${id}`,
+}
+
+// State 
+export type Route = 'login' | 'profile';
+export class RouteState {
+  @observable route: Route = 'login';
+
+  @action setRoute(route: Route) {
+    this.route = route;
+  }
+
+  @observable loggedIn = false;
+  @observable loginRequiredMessage: string = '';
+  @action setLoginRequiredMessage(message: string) {
+    this.loginRequiredMessage = message;
+  }
+  @action login() {
+    this.loggedIn = true;
+    this.loginRequiredMessage = ''
+  }
+  @action logout() {
+    this.loggedIn = false;
+    navigate(links.login());
+  }
+
+  @observable profileId: string;
+  @action setProfile(profileId: string) {
+    this.profileId = profileId;
+  }
+}
+
+export const routeState = new RouteState();
+
+// Map URL to State 
+export const router = new Router([
+  {
+    $: links.login(),
+    enter: () => routeState.setRoute('login')
+  },
+  {
+    $: links.profile(':profileId'),
+    enter: ({ params: { profileId } }) => {
+      routeState.setRoute('profile');
+      routeState.setProfile(profileId);
+    },
+    beforeEnter: () => {
+      if (!routeState.loggedIn) {
+        routeState.setLoginRequiredMessage('You need to login before you can visit a profile page');
+        return { redirect: links.login() };
+      }
+    },
+  },
+  { $: '*', enter: () => routeState.setRoute('login') },
+]).init();
+```
+Great now we have a nice flow from `url -> appliaction state`. Next up is the `state -> view`. As `state` is `mobx observable`, it's easy to do with a `mobx observer` e.g. for React: 
+
+```js
+/**
+ * Pages
+ */
+export const Login = observer(() =>
+  <Vertical>
+    <h3>Login Page</h3>
+    {!routeState.loggedIn && <Button onClick={() => routeState.login()}>Click here to login</Button>}
+    {routeState.loggedIn && <AlertSuccess>You are logged in! Visit some profile page :)</AlertSuccess>}
+    {routeState.loginRequiredMessage && <Alert>{routeState.loginRequiredMessage}</Alert>}
+    <Nav />
+  </Vertical>
+);
+
+export const Profile = observer(({ profileId }: { profileId: string }) =>
+  <Vertical>
+    <h3>Profile of : {profileId}</h3>
+    <Nav />
+  </Vertical>
+);
+
+/**
+ * Route -> Page
+ */
+const Page = observer(() => {
+  switch (routeState.route) {
+    case 'login': return <Login />;
+    case 'profile': return <Profile profileId={routeState.profileId} />
+    default:
+      const _ensure: never = routeState.route;
+      return <noscript />
+  }
+});
+```
+
+Now we have the complete working path: 
+
+![URL -> Application State -> View](https://raw.githubusercontent.com/basarat/takeme/master/docs/00-url-state.png). 
+
+The return path (dispatch path) is handled by the router (can be user clicking a `link`, or browser history navigation, or you can call `navigate` yourself), it will trigger any handlers registered giving a very deterministic and maintainable application logic:
+
+```
+url 
+-handlers cause change in -> 
+  state 
+    -mobx causes re-rendering of-> view
+```
+
 ## Tips
 Here are some tips. Few of these are really tied to us, but its good to have helpful guidance so here it is.
 

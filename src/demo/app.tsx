@@ -65,8 +65,6 @@ export const Profile = observer(({ profileId }: { profileId: string }) =>
   </Vertical>
 );
 
-
-
 /**
  * Route -> Page
  */
