@@ -28,11 +28,13 @@ else if (process.argv.includes('server')){
   box.bundle('>demo/appServer.tsx');
   const express = require('express');
   const app = express();
-  app.use('/app.js', (req, res) => {
-    res.sendFile(__dirname + '/demo/app.js');
-  });
   app.use('/', (req, res) => {
-    res.sendFile(__dirname + '/demo/index.html');
+    if ( req.path.indexOf('app.js')!==-1 ) {
+      res.sendFile(__dirname + '/demo/app.js');
+    }
+    else {
+      res.sendFile(__dirname + '/demo/index.html');
+    }
   });
   app.listen(8080, () => console.log('Example app listening on port 8080!'));
 }
