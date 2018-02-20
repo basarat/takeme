@@ -49,7 +49,7 @@ else {
       bundleReference: "sourcemaps.js.map",
       outFile: "demo/awesome/sourcemaps.js.map",
     },
-    outFile: "demo/awesome/app.js",
+    outFile: "demo/awesome/appServer.js",
     plugins: [
       fsbx.EnvPlugin({ NODE_ENV: process.argv[2] }),
       !process.argv.includes('client') 
