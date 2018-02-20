@@ -163,7 +163,7 @@ The router takes an array of `RouteConfig` objects. On a route change (browser h
 ```js
 router.enableHtml5Routing().init();
 ```
-You can even specify a base URL e.g. 
+You can even specify a `baseURL` e.g. 
 ```js
 router.enableHtml5Routing('/awesome').init();
 ```
@@ -248,5 +248,6 @@ const templateVars = {
 };
 const link = websiteRoot + link(links.profile(templateVars));
 ```
+* If you have html5Routing enabled (even with a `baseUrl` setup) you do not need to change your links at all as it is handled by the utility `link`/`navigate`/`html5LinkOnClick` methods. This keeps your link / router config independent of any (server side / server side baseUrl / client side) setup.  
 
 Of course you can use this `links.ts` in your dynamic server code as well. This way you don't get bad link refactorings (magic strings).

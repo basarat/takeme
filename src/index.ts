@@ -140,8 +140,8 @@ export class Router {
    * - Server must support returning the same page on route triggers.
    * - Your browser targets support pushState: https://caniuse.com/#search=pushstate
    */
-  enableHtml5Routing(html5Base: string = '') {
-    dom.html5Base = html5Base;
+  enableHtml5Routing(baseUrl: string = '') {
+    dom.html5Base = baseUrl;
     return this;
   }
 
