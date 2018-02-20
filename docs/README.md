@@ -19,8 +19,8 @@ If existing solutions work well for you (`npm install foo foo-bar @types/foo @ty
 
 ## Demo
 
-[Demo for all of the concepts in practice](http://basarat.com/takeme-demo)
-
+* [Client side routing demo for all of the concepts in practice](http://basarat.com/takeme-demo)
+* [HTML5 routing demo for all of the concepts in practice](http://basarat.com/takeme-demo/awesome/)
 
 ## What does it support
 
