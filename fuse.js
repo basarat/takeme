@@ -40,4 +40,21 @@ else if (process.argv.includes('server')){
 }
 else {
   box.bundle('>demo/app.tsx');
+
+  /** Also bundle for server side demo */
+  FuseBox
+  .init({
+    homeDir: "src",
+    sourceMap: {
+      bundleReference: "sourcemaps.js.map",
+      outFile: "demo/awesome/sourcemaps.js.map",
+    },
+    outFile: "demo/awesome/app.js",
+    plugins: [
+      fsbx.EnvPlugin({ NODE_ENV: process.argv[2] }),
+      !process.argv.includes('client') 
+        && !process.argv.includes('server') 
+        && fsbx.UglifyJSPlugin()
+    ]
+  }).bundle('>demo/appServer.tsx');
 }
