@@ -164,9 +164,10 @@ The router takes an array of `RouteConfig` objects. On a route change (browser h
 router.enableHtml5Routing().init();
 ```
 
-* You will need to create a `Link` component that makes browser click / navigate events to `history.pushState`. This is easy to do with the utility provided e.g. for React:
+* You will need to create a `Link` component that makes browser click / navigate events to `history.pushState`. This is easy to do with the utility `html5LinkOnClick` e.g. for React:
 
 ```js
+import { html5LinkOnClick } from 'takeme';
 const Link: React.SFC<{ href: string, target?: string }> = (props) =>
   <a onClick={(e) => html5LinkOnClick({ event: e.nativeEvent })}
     href={props.href}
