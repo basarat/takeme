@@ -22,6 +22,8 @@ If existing solutions work well for you (`npm install foo foo-bar @types/foo @ty
 * [Client side routing demo for all of the concepts in practice](http://basarat.com/takeme-demo)
 * [HTML5 routing demo for all of the concepts in practice](http://basarat.com/takeme-demo/awesome/)
 
+We cover the concepts in the example walkthrough section below, after a quick look at the small (yet complete) API.
+
 ## What does it support
 
 * Non Html5 mode: Simple `#/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management
