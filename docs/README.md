@@ -4,7 +4,7 @@
 
 > [Powered by your github ⭐s](https://github.com/basarat/takeme/stargazers).
 
-Uni directional data flow is the best data flow: 
+Uni-directional data flow is the best data flow: 
 
 ![URL -> Application State -> Your View](https://raw.githubusercontent.com/basarat/takeme/master/docs/uni-directional.png)
 
@@ -13,7 +13,7 @@ Saw the other solutions out there, I had two difference of opinions:
 * This is built in TypeScript, for TypeScript. Other libraries [will get there eventually](https://basarat.gitbooks.io/typescript/content/docs/why-typescript.html). Till then fighting with out-of-date type definitions was not fun.
 * They encourage tangling routing with components. This can be a good idea, but any time I needed more power, I had to do things like wrap my component (which may or may not work with TS classes), imagine props getting passed magically (not very type safe) and jump other hoops like `next` and `done` callbacks (we just use promises).
 
-If existing solutions work well for you (`npm install foo foo-bar @types/foo @types/foo-bar`) *thats okay*. You can move on and live a happy life yet 🌹
+If existing solutions work well for you (`npm install foo foo-bar @types/foo @types/foo-bar`) *that's okay*. You can move on and live a happy life yet 🌹
 
 > PROTIP: prefer refactorability over magic.
 
@@ -24,14 +24,14 @@ If existing solutions work well for you (`npm install foo foo-bar @types/foo @ty
 
 We cover the concepts in the example walkthrough section below, after a quick look at the small (yet complete) API.
 
-## What does it support
+## What does it support?
 
 * Non Html5 mode: Simple `#/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management
 * Html5 mode: Simple `/foo` = on match > (`beforeEnter` `enter` `beforeLeave`) management
 
 > Why not any nesting routes? 
 
-You can map `url` => `state` => `any arbitrary nesting of components` very easily and more maintainably in the long term instead of depending on hidden features of some library.
+You can map `url` => `state` => `any arbitrary nesting of components` very easily and more maintainable in the long term instead of depending on hidden features of some library.
 
 ## Install 
 
@@ -63,7 +63,7 @@ router.init();
 
 /** To nav. Just a thin wrapper on browser hash / pushstate (if supported) */
 navigate('/foo');
-/** or replace if pushstate is supported, if not its ignored magically */
+/** or replace if pushstate is supported, if not it's ignored magically */
 navigate('/foo', true);
 
 /** 
@@ -78,7 +78,7 @@ navigate('/foo', true);
 
 ### Parameters
 
-Support `:param` for loading sections e.g
+Support `:param` for loading sections e.g.
 
 ```js
 {
@@ -94,7 +94,7 @@ You can have as my params as you want e.g. `/foo/:bar/:baz`.
 
 ### Optional
 
-Wrap any section with `()` to mark it as optional. e.g `/foo(/bar)`. In this case both `/foo` and `/foo/bar` match. To escape a `(` you can use a backslash e.g. `/foo\\(\\)` will only match the url `/foo()`.
+Wrap any section with `()` to mark it as optional. e.g. `/foo(/bar)`. In this case both `/foo` and `/foo/bar` match. To escape a `(` you can use a backslash e.g. `/foo\\(\\)` will only match the url `/foo()`.
 
 ### Wild card
 
@@ -104,7 +104,7 @@ Wrap any section with `()` to mark it as optional. e.g `/foo(/bar)`. In this cas
 
 `*` does not match greedily e.g. 
 
-* `/*/c` does not match `/you/are/cool/c` as a single star only eats `/*/cool/c` and the trailing `ool/c` is unmatchd.
+* `/*/c` does not match `/you/are/cool/c` as a single star only eats `/*/cool/c` and the trailing `ool/c` is unmatched.
 
 If you want such matching use the greedy `**` wildcard e.g.
 
@@ -129,7 +129,7 @@ Example of all these handlers:
 }
 ```
 
-Lets look at these one by one.
+Let's look at these one by one.
 
 ### `beforeEnter` 
 Triggered before calling `enter`. 
@@ -141,7 +141,7 @@ Triggered before calling `enter`.
 Yay, they made it. Use the `{oldPath, newPath, params}` to your hearts content.
 
 ### `beforeLeave`
-The are about to leave. 
+They are about to leave. 
 
 * If the `newPath` is not something you like, you can go ahead and return `false` to prevent them moving (be sure to let them know why by adding some notification to your state/UI).
 * You can even go ahead and chose to redirect them elsewhere (return `Promise<{ redirect: string, replace?: boolean }>`).
@@ -186,7 +186,7 @@ const Link: React.SFC<{ href: string, target?: string }> = (props) =>
 Here is the idea again. 
 ![URL -> Application State -> Your View](https://raw.githubusercontent.com/basarat/takeme/master/docs/uni-directional.png)
 
-Lets break down this image into its portions. First the URL to Application State flow. 
+Let's break down this image into its portions. First the URL to Application State flow. 
 
 ![URL -> Application State](https://raw.githubusercontent.com/basarat/takeme/master/docs/00-url-state.png)
 
@@ -254,7 +254,7 @@ export const router = new Router([
   { $: '*', enter: () => routeState.setRoute('login') },
 ]).init();
 ```
-Great now we have a nice flow from `url -> appliaction state`. Next up is the `state -> view`. 
+Great now we have a nice flow from `url -> application state`. Next up is the `state -> view`. 
 
 ![Application State -> View](https://raw.githubusercontent.com/basarat/takeme/master/docs/01-state-view.png). 
 
