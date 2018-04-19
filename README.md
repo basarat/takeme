@@ -22,8 +22,8 @@ Build with TypeScript, for TypeScript 🌹
 
 ## Demo
 
-[A demo of the concepts explained in the docs](http://basarat.com/takeme-demo/)
-
+* [A demo of the concepts explained in the docs using client-side only hash-urls](http://basarat.com/takeme-demo/)
+* [A demo of the concepts explained in the docs using HTML5-routing](http://basarat.com/takeme-demo/awesome/)
 
 [travis-image]:https://travis-ci.org/basarat/takeme.svg?branch=master
 [travis-url]:https://travis-ci.org/basarat/takeme
