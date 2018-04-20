@@ -123,7 +123,7 @@ Example of all these handlers:
 ```js
 {
   $: '/foo/',
-  beforeEnter: ({oldPath, newPath, params}) => void | Promise<{ redirect: string, replace?: boolean }>,
+  beforeEnter: ({oldPath, newPath, params}) => void | Promise<{ redirect: string, replace?: boolean } | undefined>,
   enter: ({oldPath, newPath, params}) => void,
   beforeLeave: ({oldPath, newPath}): void | false | Promise<{ redirect: string, replace?: boolean }>,
 }
