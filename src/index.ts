@@ -91,7 +91,7 @@ export interface RouteEnterEvent extends RouteChangeEvent {
   params: MatchResultParams
 }
 
-export type RouteBeforeEnterResult = void | null | undefined | { redirect: string, replace?: boolean } | Promise<{ redirect: string, replace?: boolean }>;
+export type RouteBeforeEnterResult = void | null | undefined | { redirect: string, replace?: boolean } | Promise<{ redirect: string, replace?: boolean } | undefined>;
 export type RouteEnterResult = void;
 /*
  * false means you want to prevent leave
