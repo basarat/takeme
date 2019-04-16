@@ -202,19 +202,20 @@ export const links = {
 }
 
 // State 
-export type Route = 'login' | 'profile';
+export type Route =
+  | { type: 'login' }
+  | { type: 'profile', profileId: string };
+
 export class RouteState {
-  @observable route: Route = 'login';
+  @observable route: Route = {
+    type: 'login'
+  };
 
   @action setRoute(route: Route) {
     this.route = route;
   }
 
   @observable loggedIn = false;
-  @observable loginRequiredMessage: string = '';
-  @action setLoginRequiredMessage(message: string) {
-    this.loginRequiredMessage = message;
-  }
   @action login() {
     this.loggedIn = true;
     this.loginRequiredMessage = ''
@@ -224,9 +225,9 @@ export class RouteState {
     navigate(links.login());
   }
 
-  @observable profileId: string;
-  @action setProfile(profileId: string) {
-    this.profileId = profileId;
+  @observable loginRequiredMessage: string = '';
+  @action setLoginRequiredMessage(message: string) {
+    this.loginRequiredMessage = message;
   }
 }
 
@@ -236,13 +237,12 @@ export const routeState = new RouteState();
 export const router = new Router([
   {
     $: links.login(),
-    enter: () => routeState.setRoute('login')
+    enter: () => routeState.setRoute({ type: 'login' })
   },
   {
     $: links.profile(':profileId'),
     enter: ({ params: { profileId } }) => {
-      routeState.setRoute('profile');
-      routeState.setProfile(profileId);
+      routeState.setRoute({ type: 'profile', profileId });
     },
     beforeEnter: () => {
       if (!routeState.loggedIn) {
@@ -251,8 +251,8 @@ export const router = new Router([
       }
     },
   },
-  { $: '*', enter: () => routeState.setRoute('login') },
-]).init();
+  { $: '*', enter: () => routeState.setRoute({ type: 'login' }) },
+]);
 ```
 Great now we have a nice flow from `url -> application state`. Next up is the `state -> view`. 
 
@@ -285,9 +285,9 @@ export const Profile = observer(({ profileId }: { profileId: string }) =>
  * Application State -> Page
  */
 const Page = observer(() => {
-  switch (routeState.route) {
+  switch (routeState.route.type) {
     case 'login': return <Login />;
-    case 'profile': return <Profile profileId={routeState.profileId} />
+    case 'profile': return <Profile profileId={routeState.route.profileId} />
     default:
       const _ensure: never = routeState.route;
       return <noscript />

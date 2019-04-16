@@ -69,9 +69,9 @@ export const Profile = observer(({ profileId }: { profileId: string }) =>
  * Route -> Page
  */
 const Page = observer(() => {
-  switch (routeState.route) {
+  switch (routeState.route.type) {
     case 'login': return <Login />;
-    case 'profile': return <Profile profileId={routeState.profileId} />
+    case 'profile': return <Profile profileId={routeState.route.profileId} />
     default:
       const _ensure: never = routeState.route;
       return <noscript />

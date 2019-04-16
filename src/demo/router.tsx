@@ -5,13 +5,12 @@ import { links } from './links';
 export const router = new Router([
   {
     $: links.login(),
-    enter: () => routeState.setRoute('login')
+    enter: () => routeState.setRoute({ type: 'login' })
   },
   {
     $: links.profile(':profileId'),
     enter: ({ params: { profileId } }) => {
-      routeState.setRoute('profile');
-      routeState.setProfile(profileId);
+      routeState.setRoute({ type: 'profile', profileId });
     },
     beforeEnter: () => {
       if (!routeState.loggedIn) {
@@ -20,5 +19,5 @@ export const router = new Router([
       }
     },
   },
-  { $: '*', enter: () => routeState.setRoute('login') },
+  { $: '*', enter: () => routeState.setRoute({ type: 'login' }) },
 ]);
