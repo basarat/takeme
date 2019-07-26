@@ -159,10 +159,10 @@ export class Router {
     const oldPath = oldLocation;
     const newPath = newLocation;
 
+    /** leaving */
     for (const config of this.routes) {
       const pattern = config.$;
 
-      /** leaving */
       if (match({ pattern, path: oldPath })) {
 
         if (config.beforeLeave) {
@@ -185,8 +185,12 @@ export class Router {
           }
         }
       }
+    }
 
-      /** entering */
+    /** entering */
+    for (const config of this.routes) {
+      const pattern = config.$;
+
       const enterMatch = match({ pattern, path: newPath });
       if (enterMatch) {
         if (enterMatch.remainingPath) {
@@ -195,7 +199,7 @@ export class Router {
 
         const params = enterMatch.params;
 
-        /** entering */
+        /** beforeEnter */
         if (config.beforeEnter) {
           const result = await config.beforeEnter({ oldPath, newPath, params });
           if (result == null) {
@@ -216,7 +220,6 @@ export class Router {
     }
   }
 }
-
 
 /**
  * Navigates to the given path
@@ -254,9 +257,9 @@ export const html5LinkOnClick = ({
   event,
   replace = false
 }: {
-    event: MouseEvent,
-    replace?: boolean
-  }) => {
+  event: MouseEvent,
+  replace?: boolean
+}) => {
   const linkElement = event.target as HTMLLinkElement;
   if (
     !event.defaultPrevented && // onClick prevented default
