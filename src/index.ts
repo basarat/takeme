@@ -175,9 +175,6 @@ export class Router {
               dom.setLocation(oldLocation, true);
               return;
             }
-            else {
-              /** nothing to do */
-            }
           }
           else if (result.redirect) {
             navigate(result.redirect, result.replace);
