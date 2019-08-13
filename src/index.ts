@@ -172,7 +172,7 @@ export class Router {
           }
           else if (typeof result === 'boolean') {
             if (result === false) {
-              dom.setLocation(oldLocation, true);
+              navigate(oldLocation, true);
               return;
             }
           }
