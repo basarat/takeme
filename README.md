@@ -1,5 +1,7 @@
 # takeme
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/basarat/takeme.svg)](https://greenkeeper.io/)
+
 > Take me back to when. Things were simpler then 🌹
 
 [![Build Status][travis-image]][travis-url]
