@@ -36,7 +36,7 @@ namespace dom {
    * Used to track the last value set.
    * if it does not change we ignore events
    */
-  let oldLocation = readLocation();
+  export let oldLocation = readLocation();
 
   export function setLocation(location: string, replace: boolean) {
     if (readLocation() === location) return;
@@ -152,6 +152,7 @@ export class Router {
    */
   enableHtml5Routing(baseUrl: string = '') {
     dom.html5Base = baseUrl;
+    dom.oldLocation = dom.readLocation();
     return this;
   }
 
