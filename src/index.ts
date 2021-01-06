@@ -1,34 +1,33 @@
 import { match, MatchResult, MatchResultParams } from './match';
 export { match, MatchResult, MatchResultParams };
 
-
-namespace dom {
+class dom {
   /** Serverside safe document.location */
-  const dloc = typeof document !== 'undefined' ? document.location : { hash: '' };
+  readonly dloc = typeof document !== 'undefined' ? document.location : { hash: '' };
 
-  export let html5Base: null | string = null;
-  export function html5ModeEnabled() {
-    return html5Base !== null;
+  html5Base: null | string = null;
+  html5ModeEnabled() {
+    return this.html5Base !== null;
   }
 
-  export function readLocation(): string {
-    if (html5Base == null) {
+  readLocation(): string {
+    if (this.html5Base == null) {
       const hash =
         // When url shows '#'
         // - Non-IE browsers return ''
         // - IE returns '#'
-        (dloc.hash === '' || dloc.hash === '#')
+        (this.dloc.hash === '' || this.dloc.hash === '#')
           ? '/'
           /** 
            * Remove the leading # 
            * This keeps the matching algorithm independent of `#` (client side routing) and `/` (server side routing)
            **/
-          : dloc.hash.substring(1);
+          : this.dloc.hash.substring(1);
 
       return hash;
     }
     else {
-      return window.location.pathname.substr(html5Base.length);
+      return window.location.pathname.substr(this.html5Base.length);
     }
   }
 
@@ -36,10 +35,10 @@ namespace dom {
    * Used to track the last value set.
    * if it does not change we ignore events
    */
-  export let oldLocation = readLocation();
+  oldLocation = this.readLocation();
 
-  export function setLocation(location: string, replace: boolean) {
-    if (readLocation() === location) return;
+  setLocation(location: string, replace: boolean) {
+    if (this.readLocation() === location) return;
 
     if (typeof history !== 'undefined' && history.pushState) {
       if (replace) {
@@ -51,37 +50,40 @@ namespace dom {
       /**
        * Just calling history.pushState() or history.replaceState() won't trigger a popstate event
        */
-      fire();
+      this.fire();
     } else {
-      dloc.hash = location;
+      this.dloc.hash = location;
     }
 
-    oldLocation = readLocation();
+    this.oldLocation = this.readLocation();
   }
 
-  /** Current listeners */
-  export type ChangeEvent = { oldLocation: string, newLocation: string }
-  type Listener = { (evt: ChangeEvent): void }
-  let listeners: Listener[] = [];
-  const fire = () => {
-    const newLocation = readLocation();
-    if (oldLocation === newLocation) return;
-    listeners.forEach(l => l({ oldLocation, newLocation }));
-    oldLocation = newLocation;
+  listeners: Listener[] = [];
+  private readonly fire = () => {
+    const newLocation = this.readLocation();
+    if (this.oldLocation === newLocation) return;
+    this.listeners.forEach(l => l({ oldLocation: this.oldLocation, newLocation }));
+    this.oldLocation = newLocation;
   };
 
-  if (typeof window !== 'undefined') {
-    window.addEventListener('hashchange', fire, false);
-    window.addEventListener('popstate', fire);
+  constructor() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hashchange', this.fire, false);
+      window.addEventListener('popstate', this.fire);
+    }
   }
 
-  export function listen(cb: (evt: ChangeEvent) => void) {
-    listeners.push(cb);
+  listen(cb: (evt: ChangeEvent) => void) {
+    this.listeners.push(cb);
     return () => {
-      listeners = listeners.filter(l => l !== cb);
+      this.listeners = this.listeners.filter(l => l !== cb);
     }
   }
 }
+
+/** Current listeners */
+type ChangeEvent = { oldLocation: string, newLocation: string };
+type Listener = { (evt: ChangeEvent): void };
 
 export interface RouteChangeEvent {
   oldPath: string,
@@ -133,15 +135,16 @@ export interface RouteConfig {
 
 
 export class Router {
+  dom = new dom();
   constructor(public routes: RouteConfig[]) {
-    dom.listen(this.trigger);
+    this.dom.listen(this.trigger);
   }
 
   /**
    * Runs through the config and triggers an routes that matches the current path
    */
   init() {
-    return this.trigger({ oldLocation: '', newLocation: dom.readLocation() });
+    return this.trigger({ oldLocation: '', newLocation: this.dom.readLocation() });
   }
 
   /**
@@ -151,12 +154,12 @@ export class Router {
    * - Your browser targets support pushState: https://caniuse.com/#search=pushstate
    */
   enableHtml5Routing(baseUrl: string = '') {
-    dom.html5Base = baseUrl;
-    dom.oldLocation = dom.readLocation();
+    this.dom.html5Base = baseUrl;
+    this.dom.oldLocation = this.dom.readLocation();
     return this;
   }
 
-  private trigger = async ({ oldLocation, newLocation }: dom.ChangeEvent) => {
+  private trigger = async ({ oldLocation, newLocation }: ChangeEvent) => {
     const oldPath = oldLocation;
     const newPath = newLocation;
 
@@ -173,12 +176,12 @@ export class Router {
           }
           else if (typeof result === 'boolean') {
             if (result === false) {
-              navigate(oldLocation, true);
+              navigate(this.dom, oldLocation, true);
               return;
             }
           }
           else if (result.redirect) {
-            navigate(result.redirect, result.replace);
+            navigate(this.dom, result.redirect, result.replace);
             return;
           }
         }
@@ -204,7 +207,7 @@ export class Router {
             /** nothing to do */
           }
           else if (result.redirect) {
-            navigate(result.redirect, result.replace);
+            navigate(this.dom, result.redirect, result.replace);
             return;
           }
         }
@@ -222,7 +225,7 @@ export class Router {
 /**
  * Navigates to the given path
  */
-export function navigate(path: string, replace?: boolean) {
+export function navigate(dom: dom, path: string, replace?: boolean) {
   dom.html5ModeEnabled()
     ? dom.setLocation(`${dom.html5Base}${path}`, !!replace)
     : dom.setLocation(`#${path}`, !!replace);
@@ -231,7 +234,7 @@ export function navigate(path: string, replace?: boolean) {
 /**
  * Gives you a link that when triggered, navigates to the given path
  */
-export function link(path: string) {
+export function link(dom: dom, path: string) {
   return dom.html5ModeEnabled()
     ? `${dom.html5Base!}${path}`
     /** 
@@ -251,7 +254,7 @@ const isModifiedEvent = (event: MouseEvent): boolean => Boolean(event.metaKey ||
 /** 
  * Suppresses browser default `click` behaviour on link
  */
-export const html5LinkOnClick = ({
+export const html5LinkOnClick = (dom: dom, {
   event,
   replace = false
 }: {
