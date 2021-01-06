@@ -3,7 +3,7 @@ export { match, MatchResult, MatchResultParams };
 
 class dom {
   /** Serverside safe document.location */
-  dloc = typeof document !== 'undefined' ? document.location : { hash: '' };
+  readonly dloc = typeof document !== 'undefined' ? document.location : { hash: '' };
 
   html5Base: null | string = null;
   html5ModeEnabled() {
@@ -59,7 +59,7 @@ class dom {
   }
 
   listeners: Listener[] = [];
-  private fire = () => {
+  private readonly fire = () => {
     const newLocation = this.readLocation();
     if (this.oldLocation === newLocation) return;
     this.listeners.forEach(l => l({ oldLocation: this.oldLocation, newLocation }));
